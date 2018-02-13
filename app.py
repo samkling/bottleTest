@@ -1,10 +1,12 @@
-from bottle import run, route
+from bottle import run, route,static_file
 
-@route('/data')
-def data():
-	jsonStr = '<h1>AMAP: Automated Malware Analysis Platform</h1>'
+@route('/data/<filename>')
+def data(filename): # = '<h1>AMAP: Automated Malware Analysis Platform</h1>'
+	return static_file(filename,"./webfront/")
 
-	return htmlStr
+@route('/<filename:path>')
+def send_static(filename):
+    return static_file(filename, root='./webfront/')
 
-if __name__ == '__main__':
-	run()
+
+run(host='localhost', port=8080, debug=True)
